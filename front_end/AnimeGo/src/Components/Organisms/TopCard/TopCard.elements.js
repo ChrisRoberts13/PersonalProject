@@ -2,6 +2,7 @@ import styled from "styled-components"
 
 
 export const TopCardContainer = styled.section`
+
     max-width: 750px;
     width: 100%;
     display: flex;
@@ -9,6 +10,7 @@ export const TopCardContainer = styled.section`
     align-items: center;
     justify-content: center;
     background-color: #403f3f;
+
     
 
     
@@ -16,7 +18,7 @@ export const TopCardContainer = styled.section`
     & > * {
         width: 100%;
         padding-left: 25px;
-    }
+    };
 
 `
 export const Top = styled.div`
@@ -33,5 +35,6 @@ export const Bottom = styled.div`
     flex-wrap: wrap;
     row-gap: 10px;
     column-gap: 10px;
+    
 
 `

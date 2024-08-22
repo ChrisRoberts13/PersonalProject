@@ -10,13 +10,13 @@ export const navData = [
     name: "FavChar",
   },
   {
-    location: "/moviewatchlist/",
-    name: "MOVIE WATCHLIST",
+    location: "/watchlist/",
+    name: "Watchlist",
   },
-  {
-    location: "/tvwatchlist/",
-    name: "TV WATCHLIST",
-  },
+  // {
+  //   location: "/tvwatchlist/",
+  //   name: "TV WATCHLIST",
+  // },
   {
     location: "/login/",
     name: "Log in",

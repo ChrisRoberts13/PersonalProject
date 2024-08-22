@@ -39,8 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "user_app",
-    "movie_watchlist",
-    "tv_watchlist",
+    "watchlist",
     "favorite_characters",
     "rest_framework.authtoken",
     "corsheaders"

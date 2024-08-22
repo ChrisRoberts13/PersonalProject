@@ -79,3 +79,30 @@ export const deleteFavoriteCharacter = async (character_id) => {
         alert("Failed to remove character from favorites");
     }
 };
+
+//Watchlist
+
+export const addVideo = async (video_id, user) => {
+    console.log(video_id, user)
+    let response = await api.post("/add_video/", {
+        video_id: video_id,
+        user: user
+    })
+    if (response.status != 404) {
+        console.log("added to watchlist successfully")
+    }
+}
+
+export const getWatchlist = async (user) => {
+    let response = await api.get('/watchlist/', { user: user })
+    return response.data
+}
+
+export const deleteVideo = async (video_id) => {
+    let response = await api.delete(`/watchlist/${video_id}/delete/`);
+    if (response.status === 204) {
+        console.log("Video is removed from watchlist successfully");
+    } else {
+        alert("Failed to remove video from watchlist");
+    }
+};

@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from movie_watchlist.views import MovieWatchlistView
+
 
 # TODO: PUT TV SHOW URL 
 urlpatterns = [
@@ -27,7 +27,7 @@ urlpatterns = [
 
     path("api/", include("favorite_characters.urls")),
 
-    path("api/", include("movie_watchlist.urls"))
+    path("api/", include("watchlist.urls"))
 ]
 
     

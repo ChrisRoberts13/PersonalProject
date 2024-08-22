@@ -6,7 +6,7 @@ import LogIn from './Pages/Login.jsx'
 import SignUp from './Pages/Signup.jsx'
 import NavBar from './Components/Molecules/NavBar/NavBar.jsx'
 import FavoriteCharacter from './Pages/FavoriteCharacter.jsx'
-import MovieWatchlist from './Pages/MovieWatchlist.jsx'
+import Watchlist from './Pages/Watchlist.jsx'
 import TVWatchlist from './Pages/TVWatchlist.jsx'
 import { navData } from './Data/AnimeGoPage.js'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
@@ -25,6 +25,7 @@ function App() {
   const [isToggled, setIsToggled] = useState(false);
   const [user, setUser] = useState()
   const [animeData, setAnimeData] = useState({})
+  const isCharacter = true;
   const topCardData = {
     name: "Anime Characters",
     infoCards: [
@@ -38,6 +39,7 @@ function App() {
 
       const response = await axios.get(`https://api.jikan.moe/v4/top/characters?limit=9`)
       const result = await response?.data?.data?.map((data)=> {
+        const id = data?.mal_id;
         const src = data?.images?.jpg?.image_url || ""
         const name = data?.name || "no name found"
         const about = data?.about || "no about found"
@@ -50,6 +52,8 @@ function App() {
           },
           name,
           about,
+          id,
+          itemType: isCharacter ? 'character' : 'video',
           button: { text: "Add to Favorites" },
         };
         topCardData.infoCards.push(newObjAnimeData)
@@ -74,9 +78,8 @@ function App() {
         <NavBar navData={navData} setSearch={setSearch} search={search} setData={setData} isToggled={isToggled} setIsToggled={setIsToggled} user={user} />
         <Routes>
           <Route path='/' element={<TopCard state={animeData} />} />
-          <Route path='/favoritecharacter' element={<FavoriteCharacter user={user} />} />
-          <Route path='/moviewatchlist' element={<MovieWatchlist />} />
-          <Route path='/tvwatchlist' element={<TVWatchlist />} />
+          <Route path='/favoritecharacter' element={<FavoriteCharacter user={user} isCharacter={isCharacter}/>} />
+          <Route path='/watchlist' element={<Watchlist user={user} isCharacter={isCharacter} />} />
           <Route path='/login/' element={<LogIn setUser={setUser} user={user} />} />
           <Route path='/logout/' element={<LogOut setUser={setUser} />} />
           <Route path='/signup/' element={<SignUp setUser={setUser}/>} />

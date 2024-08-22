@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { signUp } from "../utilities";
+import { useNavigate } from "react-router-dom"
 
 const SignUp = (setUser) => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
         setUser(await signUp(email, password));
+        navigate('/login/')
     };
 
     return (

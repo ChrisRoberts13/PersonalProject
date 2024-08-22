@@ -4,30 +4,44 @@ import {
   InfoCardImage
 } from "./InfoCard.elements";
 import PropTypes from 'prop-types';
-import { addFavoriteCharacters, deleteFavoriteCharacter } from "../../../utilities";
+import { addFavoriteCharacters, deleteFavoriteCharacter, addVideo, deleteVideo } from "../../../utilities";
 import { useState, useEffect } from "react";
 
-function InfoCard({ state }) {
+function InfoCard({ state, isCharacter }) {
+  console.log("this the state", state)
   const { image, name, about, button = null, id, user = null } = state || {};
-  const [isFavorite, setIsFavorite] = useState(false);
+  const itemType = state?.itemType || "video";
+  const [isFavorite, setIsFavorite] = useState(button.text === "Remove from list");
 
   useEffect(() => {
-    // Here you can check if the character is already in the user's favorites
-    // For simplicity, you might want to pass down this information as a prop or fetch it from an API.
-    // This is just an example of how you might set the initial state.
-    setIsFavorite(button.text === "Remove from list"); // Assuming initial text indicates favorite status
+    setIsFavorite(button.text === "Remove from list");
   }, [button.text]);
 
-  const handleToggleFavorite = async () => {
+  const handleToggleFavorite = async (itemType) => {
+    console.log('Button clicked, itemType:', itemType);
+    console.log('Current isFavorite:', isFavorite);
+
     try {
       if (isFavorite) {
-        await deleteFavoriteCharacter(id);
+        if (itemType === 'character') {
+          console.log('Deleting favorite character');
+          await deleteFavoriteCharacter(id);
+        } else if (itemType === 'video') {
+          console.log('Deleting video');
+          await deleteVideo(id);
+        }
       } else {
-        await addFavoriteCharacters(id, user);
+        if (itemType === 'character') {
+          console.log('Adding favorite character');
+          await addFavoriteCharacters(id, user);
+        } else if (itemType === 'video') {
+          console.log('Adding video');
+          await addVideo(id, user);
+        }
       }
       setIsFavorite(!isFavorite);
     } catch (error) {
-      console.error("Error toggling favorite status:", error);
+      console.error(`Error toggling favorite status for ${itemType}:`, error);
     }
   };
 
@@ -45,7 +59,7 @@ function InfoCard({ state }) {
         <h3>Name: {name}</h3>
         <h3>About:</h3>
         <p>{about}</p>
-        <button onClick={handleToggleFavorite}>
+        <button onClick={() => handleToggleFavorite(itemType)}>
           {isFavorite ? "Remove from list" : "Add to list"}
         </button>
       </InfoCardStuff>
@@ -66,6 +80,9 @@ InfoCard.propTypes = {
     button: PropTypes.shape({
       text: PropTypes.string.isRequired,
     }).isRequired,
+    id: PropTypes.number.isRequired,
+    user: PropTypes.string,
+    itemType: PropTypes.string.isRequired,
   }),
 };
 

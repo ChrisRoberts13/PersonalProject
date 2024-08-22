@@ -3,7 +3,7 @@ import { getFavoriteCharacters } from "../utilities";
 import axios from "axios";
 import InfoCard from "../Components/Molecules/InfoCard/InfoCard";
 
-function FavoriteCharacter({ user }) {
+function FavoriteCharacter({ user, isCharacter}) {
   const [characterId, setCharacterId] = useState([]);
   const [characterInfo, setCharacterInfo] = useState([]);
   const topCardData = {
@@ -43,17 +43,7 @@ function FavoriteCharacter({ user }) {
       getInfo();
     }
   }, [characterId]); // Fetch character info when `characterId` changes
-  // Function to update state after deletion
-  const handleCharacterDeletion = async (characterId) => {
-    try {
-      await deleteFavoriteCharacter(characterId);
-      // Update state to remove deleted character
-      setCharacterId(prevIds => prevIds.filter(id => id !== characterId));
-      setCharacterInfo(prevInfo => prevInfo.filter(info => info.data.mal_id !== characterId));
-    } catch (error) {
-      console.error("Error deleting favorite character:", error);
-    }
-  };
+console.log(characterInfo)
   return (
     <>
       <div>FavoriteCharacter</div>
@@ -74,7 +64,10 @@ function FavoriteCharacter({ user }) {
             about,
             id,
             user,
-            button: { text: "Remove from list" },}
+            itemType:"character",
+            button: { text: "Remove from list" },
+            
+          }
             return <InfoCard key={index} state={newObjAnimeData} />
 
         })

@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 function NavBar({ navData, search, setSearch, setData, isToggled, setIsToggled, user }) {
 const navigate = useNavigate()
   const loggedOutNavBar = ["AnimeGo", "Sign up", "Log in"]
-  const loggedInNavBar = ["AnimeGo", "FavChar", "MOVIE WATCHLIST", "TV WATCHLIST", "Log out"]
+  const loggedInNavBar = ["AnimeGo", "FavChar", "Watchlist", "Log out"]
   const handleChange = (e) => {
     setSearch(e.target.value);
   }
