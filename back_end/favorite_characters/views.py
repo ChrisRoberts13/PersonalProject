@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 
 
 class getFavoriteCharacters(APIView):
@@ -31,14 +32,21 @@ class postFavoriteCharacter(APIView):
         else:
             print(serializer.errors)
             return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
-        
-# class deleteFavoriteCharacter(APIView):
-#     def delete(self, request):
 
-        
 
-    
 
+class deleteFavoriteCharacter(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, character_id, format=None):
+        user = request.user
+        # Retrieve the favorite character object for the authenticated user and given character ID
+        favorite_character = get_object_or_404(
+            FavoriteCharacter, user=user, character_id=character_id
+        )
+        favorite_character.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 # def list_favorite_characters(request):

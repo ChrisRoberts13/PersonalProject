@@ -71,3 +71,11 @@ export const getFavoriteCharacters = async (user) => {
     return response.data
 }
 
+export const deleteFavoriteCharacter = async (character_id) => {
+    let response = await api.delete(`/favorite_characters/${character_id}/delete/`);
+    if (response.status === 204) {
+        console.log("Character removed from favorites successfully");
+    } else {
+        alert("Failed to remove character from favorites");
+    }
+};
